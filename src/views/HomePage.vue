@@ -30,12 +30,12 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">{{ labelProvisionalAcidVolume }}</ion-label>
-            <ion-input type="number" v-model="provisionalAcidVolume"></ion-input>
+            <ion-label position="floating">{{ labelProvisionalAcidVol }}</ion-label>
+            <ion-input type="number" v-model="provisionalAcidVol"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">{{ labelProvisionalFertilizerVolume }}</ion-label>
+            <ion-label position="floating">{{ labelProvisionalFertilizerVol }}</ion-label>
             <ion-input type="number" v-model="provisionalFertilizerVol" step="0.01"></ion-input>
           </ion-item>
 
@@ -54,12 +54,12 @@
         <ion-button type="submit" expand="block">{{ labelCalculate }}</ion-button>
 
         <ion-item>
-          <ion-label>{{ labelRemainingAcidVolume }}</ion-label>
+          <ion-label>{{ labelRemainingAcidVol }}</ion-label>
           <ion-text>{{ remainingAcidVol }} ml</ion-text>
         </ion-item>
 
         <ion-item>
-          <ion-label>{{ labelRemainingFertilizerVolume }}</ion-label>
+          <ion-label>{{ labelRemainingFertilizerVol }}</ion-label>
           <ion-text>{{ remainingFertilizerVol }} L</ion-text>
         </ion-item>
 
@@ -119,13 +119,13 @@ const translations = {
     startEC: "Start EC:",
     phTarget: "PH Target:",
     ecTarget: "EC Target:",
-    provisionalAcidVolume: "Provisional acid volume (ml):",
-    provisionalFertilizerVolume: "Provisional fertilizer volume (L):",
+    VolprovisionalAcidVol: "Provisional acid Vol (ml):",
+    VolprovisionalFertilizerVol: "Provisional fertilizer Vol (L):",
     postMixPH: "Post-mix PH:",
     postMixEC: "Post-mix EC:",
     remainingAcidVolume: "Remaining acid volume:",
     remainingFertilizerVolume: "Remaining fertilizer volume:",
-    remainingFertilizerVolume90Percent: "Remaining fertilizer volume × 90%:",
+    remainingFertilizerVolume90Percent: "Remaining fertilizer Vol × 90%:",
     acidPHPerCl: "Acid PH/cl:",
     fertilizerECPerDl: "Fertilizer EC/dl:",
     calculate: "Calculate",
@@ -137,8 +137,8 @@ const translations = {
     startEC: "Start-EC:",
     phTarget: "PH-Ziel:",
     ecTarget: "EC-Ziel:",
-    provisionalAcidVolume: "Vorläufiges Säurevolumen (ml):",
-    provisionalFertilizerVolume: "Vorläufiges Düngervolumen (L):",
+    VolprovisionalAcidVol: "Vorläufiges Säurevolumen (ml):",
+    VolprovisionalFertilizerVol: "Vorläufiges Düngervolumen (L):",
     postMixPH: "Nachmisch-PH:",
     postMixEC: "Nachmisch-EC:",
     remainingAcidVolume: "Verbleibendes Säurevolumen:",
@@ -157,12 +157,12 @@ const labelStartPH = computed(() => translations[language.value].startPH);
 const labelStartEC = computed(() => translations[language.value].startEC);
 const labelPhTarget = computed(() => translations[language.value].phTarget);
 const labelEcTarget = computed(() => translations[language.value].ecTarget);
-const labelProvisionalAcidVolume= computed(() => translations[language.value].provisionalAcidVolume);
-const labelProvisionalFertilizerVolume = computed(() => translations[language.value].provisionalFertilizerVolume);
+const labelProvisionalAcidVol= computed(() => translations[language.value].VolprovisionalAcidVol);
+const labelProvisionalFertilizerVol = computed(() => translations[language.value].VolprovisionalFertilizerVol);
 const labelPostMixPH = computed(() => translations[language.value].postMixPH);
 const labelPostMixEC = computed(() => translations[language.value].postMixEC);
-const labelRemainingAcidVolume = computed(() => translations[language.value].remainingAcidVolume);
-const labelRemainingFertilizerVolume = computed(() => translations[language.value].remainingFertilizerVolume);
+const labelRemainingAcidVol = computed(() => translations[language.value].remainingAcidVolume);
+const labelRemainingFertilizerVol = computed(() => translations[language.value].remainingFertilizerVolume);
 const labelRemainingFertilizerVolume90Percent = computed(() => translations[language.value].remainingFertilizerVolume90Percent);
 const labelAcidPHPerCl = computed(() => translations[language.value].acidPHPerCl);
 const labelFertilizerECPerDl = computed(() => translations[language.value].fertilizerECPerDl);
@@ -176,7 +176,7 @@ const startEC = ref(null);
 const phTarget = ref(5.8);
 const ecTarget = ref(1.8);
 
-const provisionalAcidVolume= ref(30);
+const provisionalAcidVol= ref(30);
 const provisionalFertilizerVol = ref(0.5);
 const postMixPH = ref(null);
 const postMixEC = ref(null);
@@ -192,7 +192,7 @@ const acidPhPerCl = ref('')
 const calculateAcidPH = () => {
   if (startPH.value !== null && postMixPH.value !== null && provisionalAcidVol.value !== null) {
     const phDelta = startPH.value - postMixPH.value;
-    // Convert provisional acid volume from mL to cL (1 cL = 10 mL)
+    // Convert provisional acid Vol from mL to cL (1 cL = 10 mL)
     const provisionalAcidVolCl = provisionalAcidVol.value / 10;
     const phDeltaPerCl = phDelta / provisionalAcidVolCl;
     acidPhPerCl.value = parseFloat(phDeltaPerCl.toFixed(2) * -1);  // Rounded to 2 decimal places
@@ -204,6 +204,7 @@ const calculateAcidPH = () => {
       remainingAcidVol.value = parseFloat((totalAcidNeededMl - provisionalAcidVol.value).toFixed(2));
     }
   }
+  console.log("New remainingAcidVolume:", remainingAcidVol.value);
 };
 
 
@@ -222,6 +223,7 @@ const calculateFertilizerEC = () => {
       remainingFertilizerVol90Percent.value = parseFloat((remainingFertilizerVol.value * 0.9).toFixed(2));
     }
   }
+  console.log("New remainingFertilizerVol:", remainingFertilizerVol.value);
 };
 
 
