@@ -1,0 +1,7 @@
+{
+  "name": "ph-test",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
